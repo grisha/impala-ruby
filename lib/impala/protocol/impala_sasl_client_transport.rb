@@ -31,7 +31,7 @@ module Thrift
     end
 
     def read(sz)
-      len, = @transport.read(SASL_PAYLOAD_LENGTH_BYTES).unpack('l>')
+      len, = @transport.read(SASL_PAYLOAD_LENGTH_BYTES).unpack('l>') if @rbuf.nil?
       sz = len if len && sz > len
       @index += sz
       ret = @rbuf.slice(@index - sz, sz) || Bytes.empty_byte_buffer
